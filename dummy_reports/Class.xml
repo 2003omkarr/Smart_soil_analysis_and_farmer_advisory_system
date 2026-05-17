@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="draw.io" modified="2026-05-13" agent="5.0" version="24.0.0" type="device">
+  <diagram id="uml-class-diagram" name="UML Class Diagram">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" page="1" pageWidth="2200" pageHeight="1400" background="#ffffff">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="AI-Based Smart Soil Health Analysis &amp; Farmer Advisory System - UML Class Diagram" style="text;html=0;fontSize=18;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="0" y="10" width="2200" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Class Icons (green C) -->
+        <mxCell id="C_User" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Auth" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="60" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Soil" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="630" y="120" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_OCR" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="960" y="40" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_AI" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="960" y="280" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Crop" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="60" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Fert" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="310" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Irr" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="590" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Weather" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="960" y="550" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Voice" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="630" y="500" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_PDF" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="630" y="750" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Analytics" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="C_Translate" value="C" style="shape=ellipse;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#c8e6c9;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Classes -->
+        <mxCell id="User" value="User&#xa;+ userId : String&#xa;+ fullName : String&#xa;+ email : String&#xa;+ password : String&#xa;+ role : String&#xa;+ preferredLanguage : String&#xa;+ createdAt : Date&#xa;--&#xa;+ register()&#xa;+ login()&#xa;+ updateProfile()&#xa;+ uploadReport()&#xa;+ viewAnalytics()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#1565c0;fillColor=#e3f2fd;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="260" height="260" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AuthService" value="AuthService&#xa;+ token : String&#xa;+ refreshToken : String&#xa;--&#xa;+ authenticateUser()&#xa;+ generateJWT()&#xa;+ validateToken()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#455a64;fillColor=#eceff1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="80" width="220" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="SoilReport" value="SoilReport&#xa;+ reportId : String&#xa;+ phLevel : Float&#xa;+ nitrogen : Float&#xa;+ phosphorus : Float&#xa;+ potassium : Float&#xa;+ moisture : Float&#xa;+ organicCarbon : Float&#xa;+ reportFile : String&#xa;+ uploadedAt : Date&#xa;--&#xa;+ uploadReport()&#xa;+ validateReport()&#xa;+ generateAnalysis()&#xa;+ fetchRecommendations()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#e8f5e9;" vertex="1" parent="1">
+          <mxGeometry x="650" y="140" width="300" height="320" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="OCRExtractedData" value="OCRExtractedData&#xa;+ ocrId : String&#xa;+ extractedText : String&#xa;+ confidenceScore : Float&#xa;+ processedAt : Date&#xa;--&#xa;+ extractText()&#xa;+ processReport()&#xa;+ validateExtraction()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#6a1b9a;fillColor=#f3e5f5;" vertex="1" parent="1">
+          <mxGeometry x="980" y="60" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AIAnalyzer" value="AIAnalyzer&#xa;+ analyzerId : String&#xa;+ modelName : String&#xa;+ accuracy : Float&#xa;--&#xa;+ analyzeSoil()&#xa;+ predictCrop()&#xa;+ recommendFertilizer()&#xa;+ generateAdvice()&#xa;+ calculateSoilHealth()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#880e4f;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="980" y="300" width="260" height="240" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="CropRecommendation" value="CropRecommendation&#xa;+ cropRecId : String&#xa;+ cropName : String&#xa;+ suitabilityScore : Float&#xa;+ season : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generateRecommendation()&#xa;+ calculateSuitability()&#xa;+ fetchAlternatives()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="80" width="280" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="FertilizerRecommendation" value="FertilizerRecommendation&#xa;+ fertilizerRecId : String&#xa;+ fertilizerName : String&#xa;+ quantity : String&#xa;+ dosage : String&#xa;+ applicationMethod : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ recommendFertilizer()&#xa;+ calculateDosage()&#xa;+ generateUsageGuide()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="330" width="300" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="IrrigationAdvisory" value="IrrigationAdvisory&#xa;+ irrigationId : String&#xa;+ waterRequirement : String&#xa;+ irrigationSchedule : String&#xa;+ advisoryMessage : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ calculateWaterRequirement()&#xa;+ generateSchedule()&#xa;+ generateIrrigationAdvice()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="610" width="300" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="WeatherData" value="WeatherData&#xa;+ weatherId : String&#xa;+ temperature : Float&#xa;+ humidity : Float&#xa;+ rainfall : Float&#xa;+ windSpeed : Float&#xa;+ forecastDate : Date&#xa;--&#xa;+ fetchWeather()&#xa;+ generateForecast()&#xa;+ analyzeClimate()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#1976d2;fillColor=#e3f2fd;" vertex="1" parent="1">
+          <mxGeometry x="980" y="570" width="260" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="VoiceAdvisory" value="VoiceAdvisory&#xa;+ voiceId : String&#xa;+ language : String&#xa;+ audioUrl : String&#xa;+ createdAt : Date&#xa;--&#xa;+ generateVoice()&#xa;+ playAudio()&#xa;+ convertTextToSpeech()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#00838f;fillColor=#e0f7fa;" vertex="1" parent="1">
+          <mxGeometry x="650" y="520" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="PDFReport" value="PDFReport&#xa;+ pdfId : String&#xa;+ pdfUrl : String&#xa;+ generatedLanguage : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generatePDF()&#xa;+ downloadPDF()&#xa;+ exportRecommendations()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#00838f;fillColor=#e0f7fa;" vertex="1" parent="1">
+          <mxGeometry x="650" y="770" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AnalyticsDashboard" value="AnalyticsDashboard&#xa;+ analyticsId : String&#xa;+ soilHealthScore : Float&#xa;+ cropHistory : String&#xa;+ recommendationHistory : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generateCharts()&#xa;+ showAnalytics()&#xa;+ calculateInsights()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#5d4037;fillColor=#efebe9;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="280" height="240" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="TranslationService" value="TranslationService&#xa;+ supportedLanguages : String[]&#xa;+ currentLanguage : String&#xa;--&#xa;+ translateText()&#xa;+ switchLanguage()&#xa;+ localizeContent()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#4a148c;fillColor=#f3e5f5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="520" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- Associations with multiplicity -->
+        <mxCell id="assoc_user_soil" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;endArrow=none;" edge="1" parent="1" source="User" target="SoilReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_soil_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="300" y="140" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_soil_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="610" y="140" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_user_analytics" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;endArrow=none;" edge="1" parent="1" source="User" target="AnalyticsDashboard">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_analytics_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="200" y="420" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_analytics_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_ocr" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=1;endArrow=none;" edge="1" parent="1" source="SoilReport" target="OCRExtractedData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_ocr_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="110" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_ocr_right" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="110" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_crop" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="CropRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_crop_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="160" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_crop_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="140" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_fert" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="FertilizerRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_fert_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="260" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_fert_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="350" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_irrigation" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="IrrigationAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_irrigation_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="360" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_irrigation_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_weather" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="WeatherData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_weather_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="430" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_weather_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="600" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_pdf" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=1;endArrow=none;" edge="1" parent="1" source="SoilReport" target="PDFReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_pdf_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="500" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_pdf_right" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="830" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_voice" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="VoiceAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_voice_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="520" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_voice_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="680" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Dependencies -->
+        <mxCell id="dep_user_auth" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="User" target="AuthService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_soil_ocr" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="SoilReport" target="OCRExtractedData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_soil_ai" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="SoilReport" target="AIAnalyzer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_ai_crop" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="CropRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_ai_fert" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="FertilizerRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_ai_irrig" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="IrrigationAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_ai_weather" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="WeatherData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_pdf_soil" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="PDFReport" target="SoilReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="dep_voice_translation" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="VoiceAdvisory" target="TranslationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="draw.io" modified="2026-05-13" agent="5.0" version="24.0.0" type="device">
+  <diagram id="uml-class-diagram" name="UML Class Diagram">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" page="1" pageWidth="2000" pageHeight="1400" background="#ffffff">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="AI-Based Smart Soil Health Analysis &amp; Farmer Advisory System - UML Class Diagram" style="text;html=0;fontSize=18;fontStyle=bold;align=center;" vertex="1" parent="1">
+          <mxGeometry x="0" y="10" width="2000" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Classes -->
+        <mxCell id="User" value="User&#xa;+ userId : String&#xa;+ fullName : String&#xa;+ email : String&#xa;+ password : String&#xa;+ role : String&#xa;+ preferredLanguage : String&#xa;+ createdAt : Date&#xa;--&#xa;+ register()&#xa;+ login()&#xa;+ updateProfile()&#xa;+ uploadReport()&#xa;+ viewAnalytics()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#1565c0;fillColor=#e3f2fd;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="260" height="260" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AuthService" value="AuthService&#xa;+ token : String&#xa;+ refreshToken : String&#xa;--&#xa;+ authenticateUser()&#xa;+ generateJWT()&#xa;+ validateToken()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#455a64;fillColor=#eceff1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="80" width="220" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="SoilReport" value="SoilReport&#xa;+ reportId : String&#xa;+ phLevel : Float&#xa;+ nitrogen : Float&#xa;+ phosphorus : Float&#xa;+ potassium : Float&#xa;+ moisture : Float&#xa;+ organicCarbon : Float&#xa;+ reportFile : String&#xa;+ uploadedAt : Date&#xa;--&#xa;+ uploadReport()&#xa;+ validateReport()&#xa;+ generateAnalysis()&#xa;+ fetchRecommendations()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#2e7d32;fillColor=#e8f5e9;" vertex="1" parent="1">
+          <mxGeometry x="650" y="140" width="300" height="320" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="OCRExtractedData" value="OCRExtractedData&#xa;+ ocrId : String&#xa;+ extractedText : String&#xa;+ confidenceScore : Float&#xa;+ processedAt : Date&#xa;--&#xa;+ extractText()&#xa;+ processReport()&#xa;+ validateExtraction()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#6a1b9a;fillColor=#f3e5f5;" vertex="1" parent="1">
+          <mxGeometry x="980" y="60" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AIAnalyzer" value="AIAnalyzer&#xa;+ analyzerId : String&#xa;+ modelName : String&#xa;+ accuracy : Float&#xa;--&#xa;+ analyzeSoil()&#xa;+ predictCrop()&#xa;+ recommendFertilizer()&#xa;+ generateAdvice()&#xa;+ calculateSoilHealth()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#880e4f;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="980" y="300" width="260" height="240" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="CropRecommendation" value="CropRecommendation&#xa;+ cropRecId : String&#xa;+ cropName : String&#xa;+ suitabilityScore : Float&#xa;+ season : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generateRecommendation()&#xa;+ calculateSuitability()&#xa;+ fetchAlternatives()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="80" width="280" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="FertilizerRecommendation" value="FertilizerRecommendation&#xa;+ fertilizerRecId : String&#xa;+ fertilizerName : String&#xa;+ quantity : String&#xa;+ dosage : String&#xa;+ applicationMethod : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ recommendFertilizer()&#xa;+ calculateDosage()&#xa;+ generateUsageGuide()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="330" width="300" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="IrrigationAdvisory" value="IrrigationAdvisory&#xa;+ irrigationId : String&#xa;+ waterRequirement : String&#xa;+ irrigationSchedule : String&#xa;+ advisoryMessage : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ calculateWaterRequirement()&#xa;+ generateSchedule()&#xa;+ generateIrrigationAdvice()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#ef6c00;fillColor=#fff3e0;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="610" width="300" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="WeatherData" value="WeatherData&#xa;+ weatherId : String&#xa;+ temperature : Float&#xa;+ humidity : Float&#xa;+ rainfall : Float&#xa;+ windSpeed : Float&#xa;+ forecastDate : Date&#xa;--&#xa;+ fetchWeather()&#xa;+ generateForecast()&#xa;+ analyzeClimate()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#1976d2;fillColor=#e3f2fd;" vertex="1" parent="1">
+          <mxGeometry x="980" y="570" width="260" height="230" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="VoiceAdvisory" value="VoiceAdvisory&#xa;+ voiceId : String&#xa;+ language : String&#xa;+ audioUrl : String&#xa;+ createdAt : Date&#xa;--&#xa;+ generateVoice()&#xa;+ playAudio()&#xa;+ convertTextToSpeech()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#00838f;fillColor=#e0f7fa;" vertex="1" parent="1">
+          <mxGeometry x="650" y="520" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="PDFReport" value="PDFReport&#xa;+ pdfId : String&#xa;+ pdfUrl : String&#xa;+ generatedLanguage : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generatePDF()&#xa;+ downloadPDF()&#xa;+ exportRecommendations()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#00838f;fillColor=#e0f7fa;" vertex="1" parent="1">
+          <mxGeometry x="650" y="770" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="AnalyticsDashboard" value="AnalyticsDashboard&#xa;+ analyticsId : String&#xa;+ soilHealthScore : Float&#xa;+ cropHistory : String&#xa;+ recommendationHistory : String&#xa;+ generatedAt : Date&#xa;--&#xa;+ generateCharts()&#xa;+ showAnalytics()&#xa;+ calculateInsights()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#5d4037;fillColor=#efebe9;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="280" height="240" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="TranslationService" value="TranslationService&#xa;+ supportedLanguages : String[]&#xa;+ currentLanguage : String&#xa;--&#xa;+ translateText()&#xa;+ switchLanguage()&#xa;+ localizeContent()" style="shape=umlClass;whiteSpace=wrap;html=0;strokeColor=#4a148c;fillColor=#f3e5f5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="520" width="260" height="220" as="geometry"/>
+        </mxCell>
+
+        <!-- Associations with multiplicity -->
+        <mxCell id="assoc_user_soil" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;endArrow=none;" edge="1" parent="1" source="User" target="SoilReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_soil_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="300" y="140" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_soil_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="610" y="140" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_user_analytics" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;endArrow=none;" edge="1" parent="1" source="User" target="AnalyticsDashboard">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_analytics_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="200" y="420" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_user_analytics_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_ocr" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=1;endArrow=none;" edge="1" parent="1" source="SoilReport" target="OCRExtractedData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_ocr_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="110" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_ocr_right" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="110" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_crop" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="CropRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_crop_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="160" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_crop_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="140" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_fert" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="FertilizerRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_fert_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="260" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_fert_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="350" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_irrigation" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="IrrigationAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_irrigation_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="360" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_irrigation_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_weather" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="WeatherData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_weather_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="430" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_weather_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="600" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_pdf" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=1;endArrow=none;" edge="1" parent="1" source="SoilReport" target="PDFReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_pdf_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="500" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_pdf_right" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="830" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assoc_soil_voice" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;startArrow=diamond;startFill=0;endArrow=none;" edge="1" parent="1" source="SoilReport" target="VoiceAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_voice_left" value="1" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="520" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="mul_soil_voice_right" value="0..*" style="text;html=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="680" width="40" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Dependencies (dashed) -->
+        <mxCell id="dep_user_auth" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="User" target="AuthService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_soil_ocr" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="SoilReport" target="OCRExtractedData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_soil_ai" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="SoilReport" target="AIAnalyzer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_ai_crop" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="CropRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_ai_fert" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="FertilizerRecommendation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_ai_irrig" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="IrrigationAdvisory">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_ai_weather" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="AIAnalyzer" target="WeatherData">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_pdf_soil" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="PDFReport" target="SoilReport">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dep_voice_translation" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;dashed=1;endArrow=open;" edge="1" parent="1" source="VoiceAdvisory" target="TranslationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile> -->
