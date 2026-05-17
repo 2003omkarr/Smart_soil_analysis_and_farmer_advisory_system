@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     const { t } = useTranslation()
 
     const menuItems = [
-        { name: t('dashboard'),    path: '/',          icon: FiHome,       color: 'text-primary-600', bg: 'bg-primary-50' },
+        { name: t('dashboard'),    path: '/dashboard',          icon: FiHome,       color: 'text-primary-600', bg: 'bg-primary-50' },
         { name: t('uploadReport'),path: '/upload',     icon: FiUpload,     color: 'text-blue-600',    bg: 'bg-blue-50'    },
         { name: t('soilAnalysis'),path: '/analysis',   icon: FiBarChart2,  color: 'text-amber-600',   bg: 'bg-amber-50'   },
         { name: t('recommendations'),path:'/recommendations', icon: FiTrendingUp, color:'text-purple-600', bg:'bg-purple-50'},
@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         .split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
 
     const isActive = (path) =>
-        path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
+        path === '/dashboard' ? location.pathname === '/dashboard' : location.pathname.startsWith(path)
 
     const handleLogout = () => {
         dispatch(logout())

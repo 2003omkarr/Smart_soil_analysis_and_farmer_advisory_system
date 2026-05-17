@@ -5,8 +5,8 @@ const Breadcrumbs = () => {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
 
-    // If we are on the dashboard, don't show breadcrumbs
-    if (pathnames.length === 0) return null;
+    // If we are on the dashboard or landing page, don't show breadcrumbs
+    if (pathnames.length === 0 || (pathnames.length === 1 && pathnames[0] === 'dashboard')) return null;
 
     const routeNameMap = {
         'upload': 'Upload Report',
@@ -21,7 +21,7 @@ const Breadcrumbs = () => {
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
                     <Link
-                        to="/"
+                        to="/dashboard"
                         className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary-600 transition-colors"
                     >
                         <FiHome className="w-4 h-4 mr-2" />

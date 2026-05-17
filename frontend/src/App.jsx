@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Landing from './pages/Landing'
 import UploadSoilReport from './pages/UploadSoilReport'
 import SoilAnalysis from './pages/SoilAnalysis'
 import Recommendations from './pages/Recommendations'
@@ -19,7 +20,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/upload" element={<PrivateRoute><UploadSoilReport /></PrivateRoute>} />
                 <Route path="/analysis/:id" element={<PrivateRoute><SoilAnalysis /></PrivateRoute>} />
                 <Route path="/recommendations/:id" element={<PrivateRoute><Recommendations /></PrivateRoute>} />
