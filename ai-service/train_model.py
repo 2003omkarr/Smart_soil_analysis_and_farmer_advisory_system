@@ -330,7 +330,7 @@ def train_crop_model(
 if __name__ == "__main__":
     # Train the model with full pipeline
     results = train_crop_model(
-        data_path="../Crop_recommendation.csv",
+        data_path="Crop_recommendation.csv",
         test_size=0.2,
         random_state=42,
         perform_tuning=False,  # Set to True for hyperparameter tuning (takes longer)
