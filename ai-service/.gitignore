@@ -27,9 +27,9 @@ wheels/
 .env
 
 # Models
-models/*.pkl
-models/*.h5
-models/*.joblib
+# models/*.pkl
+# models/*.h5
+# models/*.joblib
 
 # Jupyter
 .ipynb_checkpoints
