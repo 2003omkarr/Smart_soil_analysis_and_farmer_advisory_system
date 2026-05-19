@@ -37,6 +37,8 @@ export const recommendationSlice = createSlice({
         builder
             .addCase(getRecommendations.pending, (state) => {
                 state.isLoading = true
+                state.isError = false
+                state.message = ''
             })
             .addCase(getRecommendations.fulfilled, (state, action) => {
                 state.isLoading = false

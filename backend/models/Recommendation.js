@@ -19,6 +19,7 @@ const recommendationSchema = mongoose.Schema(
         cropReason: {
             type: String,
         },
+        alternatives: [String],
         soilHealthScore: {
             type: Number,
             min: 0,

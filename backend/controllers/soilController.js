@@ -21,6 +21,8 @@ export const uploadSoilReport = asyncHandler(async (req, res) => {
         const fileBuffer = fs.readFileSync(req.file.path)
 
         let extractedData = {}
+            let extractedFields = []
+        
         try {
             const geminiResult = await extractDataWithGemini(fileBuffer, req.file.mimetype)
 
@@ -35,7 +37,18 @@ export const uploadSoilReport = asyncHandler(async (req, res) => {
                     humidity: geminiResult.humidity !== null ? geminiResult.humidity : '',
                     rainfall: geminiResult.rainfall !== null ? geminiResult.rainfall : ''
                 }
+                
+                     // Track which fields were successfully extracted
+                     if (geminiResult.N !== null) extractedFields.push('N');
+                     if (geminiResult.P !== null) extractedFields.push('P');
+                     if (geminiResult.K !== null) extractedFields.push('K');
+                     if (geminiResult.ph !== null) extractedFields.push('ph');
+                     if (geminiResult.temperature !== null) extractedFields.push('temperature');
+                     if (geminiResult.humidity !== null) extractedFields.push('humidity');
+                     if (geminiResult.rainfall !== null) extractedFields.push('rainfall');
+                
                 console.log('Gemini extraction successful:', extractedData)
+                     console.log(`Extracted ${extractedFields.length} fields:`, extractedFields.join(', '))
             }
         } catch (extractionError) {
             console.warn('AI extraction failed:', extractionError.message)
@@ -45,6 +58,9 @@ export const uploadSoilReport = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             extractedData,
+                extractedFields,
+                missingFields: ['N', 'P', 'K', 'ph', 'temperature', 'humidity', 'rainfall']
+                    .filter(f => !extractedFields.includes(f)),
             message: 'File processed. Please review the extracted data.'
         })
     } catch (error) {
@@ -104,20 +120,36 @@ export const createManualReport = asyncHandler(async (req, res) => {
         throw new Error('Please provide N, P, K, and pH values')
     }
 
-    // Create soil report with manual data
+    // Validate that required values are not empty strings
+    const nitrogenVal = nitrogen !== '' ? parseFloat(nitrogen) : null;
+    const phosphorusVal = phosphorus !== '' ? parseFloat(phosphorus) : null;
+    const potassiumVal = potassium !== '' ? parseFloat(potassium) : null;
+    const phVal = ph !== '' ? parseFloat(ph) : null;
+    
+    // Check for missing required values
+    if (nitrogenVal === null || phosphorusVal === null || potassiumVal === null || phVal === null) {
+        res.status(400)
+        throw new Error('All required fields (N, P, K, pH) must have valid values. Please check your entries.')
+    }
+    
+    // For optional fields, use provided values or null (not auto-defaults)
+    const temperatureVal = temperature && temperature !== '' ? parseFloat(temperature) : null;
+    const humidityVal = humidity && humidity !== '' ? parseFloat(humidity) : null;
+    const rainfallVal = rainfall && rainfall !== '' ? parseFloat(rainfall) : null;
+
     const soilReport = await SoilReport.create({
         user: req.user._id,
-        farmName: 'Manual Entry',
+        farmName: req.user.name ? `${req.user.name}'s Farm` : 'Manual Entry',
         location: req.user.location || 'Not specified',
         area: 1,
         soilType: 'Manual Entry',
-        nitrogen: parseFloat(nitrogen),
-        phosphorus: parseFloat(phosphorus),
-        potassium: parseFloat(potassium),
-        ph: parseFloat(ph),
-        temperature: parseFloat(temperature) || 25,
-        humidity: parseFloat(humidity) || 70,
-        rainfall: parseFloat(rainfall) || 150,
+        nitrogen: nitrogenVal,
+        phosphorus: phosphorusVal,
+        potassium: potassiumVal,
+        ph: phVal,
+        temperature: temperatureVal || 25,
+        humidity: humidityVal || 70,
+        rainfall: rainfallVal || 150,
         status: 'processing'
     })
 

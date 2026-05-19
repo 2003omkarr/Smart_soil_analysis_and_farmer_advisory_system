@@ -54,7 +54,7 @@ const RecommendationCard = ({ recommendation, type = 'crop' }) => {
                         </div>
                         <div>
                             <p className="text-2xl font-bold text-gray-900">
-                                {translateCrop(recommendation.crop) || recommendation.crop}
+                                {translateCrop(recommendation.crop) || recommendation.crop || 'Unknown crop'}
                             </p>
                             <p className="text-sm text-gray-500">{t('bestSuitedForSoil')}</p>
                         </div>
@@ -77,7 +77,7 @@ const RecommendationCard = ({ recommendation, type = 'crop' }) => {
                                         key={index}
                                         className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
                                     >
-                                        {translateCrop(alt.crop || alt) || alt.crop || alt}
+                                        {translateCrop(alt.crop || alt) || alt.crop || alt || 'Unknown crop'}
                                     </span>
                                 ))}
                             </div>

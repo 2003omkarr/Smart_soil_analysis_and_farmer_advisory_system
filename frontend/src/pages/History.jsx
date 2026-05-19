@@ -38,6 +38,7 @@ const History = () => {
     const dispatch  = useDispatch()
     const { t } = useTranslation()
     const { reports, isLoading } = useSelector((s) => s.soil)
+    const { user } = useSelector((s) => s.auth)
     
     const statusConfig = getStatusConfig(t)
 
@@ -162,7 +163,7 @@ const History = () => {
                                                 <div className="flex items-start justify-between gap-2 flex-wrap">
                                                     <div>
                                                         <h3 className="font-semibold text-gray-900 dark:text-white text-lg leading-tight">
-                                                            {report.farmName || t('unnamedReport')}
+                                                            {report.farmName === 'Manual Entry' && user?.name ? `${user.name}'s Farm` : (report.farmName || t('unnamedReport'))}
                                                         </h3>
                                                         <div className="flex flex-wrap items-center gap-3 mt-1 text-sm text-gray-500">
                                                             <span className="flex items-center gap-1">
@@ -205,8 +206,8 @@ const History = () => {
                                                             <NPKBadge label="N" value={report.N ?? report.nitrogen} color="bg-green-50 text-green-700" />
                                                             <NPKBadge label="P" value={report.P ?? report.phosphorus} color="bg-blue-50 text-blue-700" />
                                                             <NPKBadge label="K" value={report.K ?? report.potassium} color="bg-purple-50 text-purple-700" />
-                                                            {(report.pH != null) && (
-                                                                <NPKBadge label="pH" value={report.pH} color="bg-amber-50 text-amber-700" />
+                                                            {(report.pH != null || report.ph != null) && (
+                                                                <NPKBadge label="pH" value={report.ph ?? report.pH} color="bg-amber-50 text-amber-700" />
                                                             )}
                                                         </div>
                                                     )}

@@ -20,6 +20,9 @@ const UploadSoilReport = () => {
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [extractedData, setExtractedData] = useState(null);
+        const [extractedFields, setExtractedFields] = useState([]);
+        const [missingFields, setMissingFields] = useState([]);
+        
     const [manualData, setManualData] = useState({
         nitrogen: '',
         phosphorus: '',
@@ -73,6 +76,9 @@ const UploadSoilReport = () => {
 
             if (response.data.extractedData) {
                 setExtractedData(response.data.extractedData);
+                setExtractedFields(response.data.extractedFields || []);
+                setMissingFields(response.data.missingFields || []);
+                
                 setManualData({
                     nitrogen: response.data.extractedData.nitrogen || '',
                     phosphorus: response.data.extractedData.phosphorus || '',
@@ -102,6 +108,15 @@ const UploadSoilReport = () => {
 
     const handleManualSubmit = async () => {
         try {
+            // Validate required fields
+            const requiredFields = ['nitrogen', 'phosphorus', 'potassium', 'ph'];
+            const missingRequired = requiredFields.filter(field => manualData[field] === '' || manualData[field] === null);
+            
+            if (missingRequired.length > 0) {
+                toast.error(`Please fill in all required fields: ${missingRequired.join(', ')}`);
+                return;
+            }
+            
             setUploading(true);
             setStep(3);
 
@@ -127,6 +142,35 @@ const UploadSoilReport = () => {
             ...manualData,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const FieldInput = ({ label, name, placeholder, step }) => {
+        const isExtracted = extractedFields.includes(name === 'nitrogen' ? 'N' : name === 'phosphorus' ? 'P' : name === 'potassium' ? 'K' : name);
+        const isMissing = missingFields.includes(name === 'nitrogen' ? 'N' : name === 'phosphorus' ? 'P' : name === 'potassium' ? 'K' : name);
+
+        return (
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center justify-between">
+                    <span>{label}</span>
+                    {isExtracted && (
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Extracted</span>
+                    )}
+                    {isMissing && manualData[name] === '' && (
+                        <span className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded">Required</span>
+                    )}
+                </label>
+                <input
+                    type="number"
+                    step={step}
+                    name={name}
+                    value={manualData[name]}
+                    onChange={handleManualChange}
+                    className={`input-field ${isMissing && manualData[name] === '' ? 'border-amber-300' : ''}`}
+                    placeholder={placeholder}
+                    required
+                />
+            </div>
+        );
     };
 
     return (
@@ -233,110 +277,33 @@ const UploadSoilReport = () => {
                                 <div className="mb-6">
                                     <h3 className="text-lg font-semibold text-gray-800">{t('reviewSoilData')}</h3>
                                     <p className="text-sm text-gray-500 mt-1">{t('reviewSoilDataDesc')}</p>
+                                    
+                                    {/* Extraction Summary */}
+                                    {useManualEntry && (extractedFields.length > 0 || missingFields.length > 0) && (
+                                        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                            <div className="text-sm">
+                                                <p className="font-medium text-blue-900">
+                                                    ✓ Extracted {extractedFields.length} fields: {extractedFields.join(', ')}
+                                                </p>
+                                                {missingFields.length > 0 && (
+                                                    <p className="text-amber-700 mt-1">
+                                                        ⚠ Missing {missingFields.length} fields: {missingFields.join(', ')} - Please enter values
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                                 
                                 <div className="space-y-4">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('nitrogenLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="nitrogen"
-                                                    value={manualData.nitrogen}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 90"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('phosphorusLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="phosphorus"
-                                                    value={manualData.phosphorus}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 42"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('potassiumLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="potassium"
-                                                    value={manualData.potassium}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 43"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('phLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    step="0.1"
-                                                    name="ph"
-                                                    value={manualData.ph}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 6.5"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('tempLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    step="0.1"
-                                                    name="temperature"
-                                                    value={manualData.temperature}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 25"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('humidityLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="humidity"
-                                                    value={manualData.humidity}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 70"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                    {t('rainfallLabel')}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="rainfall"
-                                                    value={manualData.rainfall}
-                                                    onChange={handleManualChange}
-                                                    className="input-field"
-                                                    placeholder="e.g., 150"
-                                                    required
-                                                />
-                                            </div>
+                                                <FieldInput label={t('nitrogenLabel')} name="nitrogen" placeholder="e.g., 90" />
+                                                <FieldInput label={t('phosphorusLabel')} name="phosphorus" placeholder="e.g., 42" />
+                                                <FieldInput label={t('potassiumLabel')} name="potassium" placeholder="e.g., 43" />
+                                                <FieldInput label={t('phLabel')} name="ph" placeholder="e.g., 6.5" step="0.1" />
+                                                <FieldInput label={t('tempLabel')} name="temperature" placeholder="e.g., 25" step="0.1" />
+                                                <FieldInput label={t('humidityLabel')} name="humidity" placeholder="e.g., 70" />
+                                                <FieldInput label={t('rainfallLabel')} name="rainfall" placeholder="e.g., 150" />
                                         </div>
 
                                         <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">

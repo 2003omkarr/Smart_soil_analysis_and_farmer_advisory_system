@@ -169,6 +169,10 @@ const tipTranslations = {
 
 // Smart matching function to find similar tips
 const findMatchingTranslation = (tipText) => {
+    if (typeof tipText !== 'string' || !tipText.trim()) {
+        return null
+    }
+
     const lowerTip = tipText.toLowerCase()
     
     // Direct match
@@ -197,8 +201,13 @@ export const useTranslation = () => {
     }
 
     const translateCrop = (cropName) => {
+        if (typeof cropName !== 'string' || !cropName.trim()) {
+            return ''
+        }
+
         const cropKey = `crop_${cropName.toLowerCase().replace(/\s+/g, '_')}`
-        return t(cropKey)
+        const translatedCrop = t(cropKey)
+        return translatedCrop === cropKey ? cropName : translatedCrop
     }
 
     const translateTip = (tipText) => {

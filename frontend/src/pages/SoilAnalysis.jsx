@@ -48,6 +48,7 @@ const SoilAnalysis = () => {
     const navigate  = useNavigate()
     const dispatch  = useDispatch()
     const { currentReport, isLoading } = useSelector((s) => s.soil)
+    const { user } = useSelector((s) => s.auth)
     const { t } = useTranslation()
     const [voiceModalOpen, setVoiceModalOpen] = useState(false)
 
@@ -67,6 +68,10 @@ const SoilAnalysis = () => {
     }
 
     const r = currentReport
+    const phValue = r.ph ?? r.pH
+    const displayFarmName = r.farmName === 'Manual Entry' && user?.name
+        ? `${user.name}'s Farm`
+        : (r.farmName || 'Farm Report')
 
     const npkBar = [
         { name: 'Nitrogen (N)', value: r.N ?? r.nitrogen ?? 0 },
@@ -78,7 +83,7 @@ const SoilAnalysis = () => {
         { subject: 'Nitrogen',    A: r.N    ?? r.nitrogen    ?? 0, fullMark: 140 },
         { subject: 'Phosphorus',  A: r.P    ?? r.phosphorus  ?? 0, fullMark: 145 },
         { subject: 'Potassium',   A: r.K    ?? r.potassium   ?? 0, fullMark: 205 },
-        { subject: 'pH',          A: ((r.pH ?? 7) / 14) * 100, fullMark: 100 },
+        { subject: 'pH',          A: ((phValue ?? 7) / 14) * 100, fullMark: 100 },
         { subject: 'Temperature', A: r.temperature ?? 25,      fullMark: 45  },
         { subject: 'Humidity',    A: r.humidity    ?? 50,      fullMark: 100 },
     ]
@@ -113,7 +118,7 @@ const SoilAnalysis = () => {
                             <FiChevronLeft className="w-4 h-4" /> {t('backToHistory')}
                         </button>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{t('soilAnalysisReport')}</h1>
-                        <p className="text-gray-500 dark:text-gray-400 mt-1">{r.farmName || 'Farm Report'} • {r.location}</p>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1">{displayFarmName} • {r.location}</p>
                     </div>
                     <div className="flex gap-3 flex-wrap">
                         <button
@@ -135,7 +140,7 @@ const SoilAnalysis = () => {
                 <div className="bg-gradient-to-r from-primary-600 to-emerald-700 rounded-2xl p-6 text-white">
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {[
-                            { label: 'Farm Name',  value: r.farmName  || '—' },
+                            { label: 'Farm Name',  value: displayFarmName },
                             { label: 'Location',   value: r.location  || '—', icon: FiMapPin },
                             { label: 'Area',       value: r.area ? `${r.area} acres` : '—', icon: FiLayers },
                             { label: 'Soil Type',  value: r.soilType  || '—' },
@@ -152,7 +157,7 @@ const SoilAnalysis = () => {
                 <div>
                     <h2 className="text-lg font-semibold text-gray-800 mb-3">Soil Parameters</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                        <ParamCard icon={FiDroplet}     label="pH Level"     value={r.pH}          unit=""    color="bg-amber-50 text-amber-600" />
+                        <ParamCard icon={FiDroplet}     label="pH Level"     value={phValue}          unit=""    color="bg-amber-50 text-amber-600" />
                         <ParamCard icon={FiCloud}       label="Rainfall"     value={r.rainfall}    unit="mm"  color="bg-blue-50 text-blue-600" />
                         <ParamCard icon={FiThermometer} label="Temperature"  value={r.temperature} unit="°C"  color="bg-red-50 text-red-500" />
                         <ParamCard icon={FiDroplet}     label="Humidity"     value={r.humidity}    unit="%"   color="bg-cyan-50 text-cyan-600" />
@@ -199,18 +204,18 @@ const SoilAnalysis = () => {
                     <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">pH Scale Interpretation</h2>
                     <div className="flex items-center gap-6 flex-wrap">
                         <div className="text-center">
-                            <p className={`text-5xl font-black ${pHColor(r.pH)}`}>{r.pH ?? '—'}</p>
-                            <p className="text-sm font-medium text-gray-500 mt-1">{pHLabel(r.pH)}</p>
+                            <p className={`text-5xl font-black ${pHColor(phValue)}`}>{phValue ?? '—'}</p>
+                            <p className="text-sm font-medium text-gray-500 mt-1">{pHLabel(phValue)}</p>
                         </div>
                         <div className="flex-1 min-w-48">
                             {/* pH scale bar */}
                             <div className="relative h-4 rounded-full overflow-hidden" style={{
                                 background: 'linear-gradient(to right, #ef4444, #f59e0b, #22c55e, #3b82f6, #6366f1)'
                             }}>
-                                {r.pH && (
+                                {phValue && (
                                     <div
                                         className="absolute top-0 w-4 h-4 bg-white border-2 border-gray-800 rounded-full shadow -translate-x-1/2"
-                                        style={{ left: `${((r.pH - 0) / 14) * 100}%` }}
+                                        style={{ left: `${((phValue - 0) / 14) * 100}%` }}
                                     />
                                 )}
                             </div>

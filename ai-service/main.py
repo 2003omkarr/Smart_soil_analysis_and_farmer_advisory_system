@@ -6,10 +6,14 @@ Complete ML-powered agricultural recommendation system
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Dict
 import logging
 import os
+import asyncio
+import hashlib
+import json
 from pathlib import Path
+from datetime import datetime, timedelta
 
 from app.services.crop_predictor import crop_predictor
 from app.services.soil_analyzer import soil_analyzer
@@ -44,6 +48,45 @@ app.add_middleware(
 # Initialize services
 ocr_service = OCRService()
 weather_service = WeatherService()
+
+# ========================================
+# RESPONSE CACHING
+# ========================================
+class CacheEntry:
+    def __init__(self, data, ttl_seconds=3600):
+        self.data = data
+        self.created_at = datetime.now()
+        self.ttl = ttl_seconds
+    
+    def is_expired(self):
+        return datetime.now() - self.created_at > timedelta(seconds=self.ttl)
+
+analysis_cache: Dict[str, CacheEntry] = {}
+
+def get_cache_key(soil_data: dict, crop: Optional[str], language: str) -> str:
+    """Generate a cache key from soil data and parameters"""
+    cache_dict = {
+        'soil': {k: round(v, 1) for k, v in soil_data.items()},  # Round to 1 decimal for consistency
+        'crop': crop,
+        'language': language
+    }
+    cache_str = json.dumps(cache_dict, sort_keys=True)
+    return hashlib.sha256(cache_str.encode()).hexdigest()
+
+def get_cached_analysis(cache_key: str) -> Optional[dict]:
+    """Retrieve from cache if exists and not expired"""
+    if cache_key in analysis_cache:
+        entry = analysis_cache[cache_key]
+        if not entry.is_expired():
+            logger.info(f"Cache hit for key {cache_key[:8]}...")
+            return entry.data
+        else:
+            del analysis_cache[cache_key]
+    return None
+
+def set_cached_analysis(cache_key: str, data: dict):
+    """Store in cache"""
+    analysis_cache[cache_key] = CacheEntry(data, ttl_seconds=3600)  # 1 hour TTL
 
 # ========================================
 # PYDANTIC MODELS
@@ -132,13 +175,23 @@ async def predict_crop(request: CropPredictionRequest):
     Predict best crop for given soil conditions
     
     Returns:
-        Crop recommendation with confidence scores
+        Crop recommendation with confidence scores (cached)
     """
     try:
         logger.info("Received crop prediction request")
         
         # Convert Pydantic model to dict
         soil_data = request.soil_data.dict()
+        
+        # Check cache
+        cache_key = get_cache_key(soil_data, None, "en")
+        cached_result = get_cached_analysis(cache_key)
+        if cached_result and "cropRecommendation" in cached_result:
+            return StandardResponse(
+                success=True,
+                data=cached_result,
+                message="Crop prediction completed successfully (from cache)"
+            )
         
         # Make prediction
         prediction = crop_predictor.predict(soil_data)
@@ -153,6 +206,9 @@ async def predict_crop(request: CropPredictionRequest):
         
         if request.include_alternatives:
             response_data["alternatives"] = prediction['top_5_predictions'][1:4]
+        
+        # Cache the result
+        set_cached_analysis(cache_key, response_data)
         
         return StandardResponse(
             success=True,
@@ -174,13 +230,24 @@ async def analyze_soil_health(request: SoilHealthRequest):
     Analyze soil health and provide recommendations
     
     Returns:
-        Comprehensive soil health report
+        Comprehensive soil health report (cached)
     """
     try:
         logger.info("Received soil health analysis request")
         
         # Convert Pydantic model to dict
         soil_data = request.soil_data.dict()
+        language = request.language.lower() if request.language else "en"
+        
+        # Check cache
+        cache_key = get_cache_key(soil_data, request.crop, language)
+        cached_result = get_cached_analysis(cache_key)
+        if cached_result and "soilHealthScore" in cached_result:
+            return StandardResponse(
+                success=True,
+                data=cached_result,
+                message="Soil health analysis completed successfully (from cache)"
+            )
         
         # Perform analysis
         analysis = soil_analyzer.analyze(
@@ -203,6 +270,9 @@ async def analyze_soil_health(request: SoilHealthRequest):
         
         if analysis['fertilizer_recommendation']:
             response_data["fertilizerRecommendation"] = analysis['fertilizer_recommendation']
+        
+        # Cache the result
+        set_cached_analysis(cache_key, response_data)
         
         return StandardResponse(
             success=True,
@@ -360,21 +430,49 @@ async def complete_analysis(request: SoilHealthRequest):
     Includes crop prediction, soil health, and fertilizer recommendations
     
     Returns:
-        Comprehensive analysis report
+        Comprehensive analysis report (cached for instant response on repeat requests)
     """
     try:
         logger.info(f"Received complete analysis request (language: {request.language})")
         
         # Convert Pydantic model to dict
         soil_data = request.soil_data.dict()
+        language = request.language.lower() if request.language else "en"
         
-        # Crop prediction
-        crop_prediction = crop_predictor.predict(soil_data)
+        # Check cache first
+        cache_key = get_cache_key(soil_data, request.crop, language)
+        cached_result = get_cached_analysis(cache_key)
+        if cached_result:
+            return StandardResponse(
+                success=True,
+                data=cached_result,
+                message="Complete analysis finished successfully (from cache)"
+            )
+        
+        # Run crop prediction and soil analysis in parallel
+        def predict_crop_sync():
+            return crop_predictor.predict(soil_data)
+        
+        def analyze_soil_sync():
+            # Use a dummy crop for initial analysis
+            return soil_analyzer.analyze(
+                soil_data,
+                crop=request.crop or "rice",  # Use default crop for initial analysis
+                area_hectares=request.area_hectares,
+                prefer_organic=request.prefer_organic
+            )
+        
+        # Run both operations concurrently using thread pool
+        loop = asyncio.get_event_loop()
+        crop_prediction, soil_analysis = await asyncio.gather(
+            loop.run_in_executor(None, predict_crop_sync),
+            loop.run_in_executor(None, analyze_soil_sync)
+        )
         
         # Use predicted crop if not specified
         crop = request.crop or crop_prediction['recommended_crop']
         
-        # Soil health analysis
+        # Re-analyze soil with predicted crop for better recommendations
         soil_analysis = soil_analyzer.analyze(
             soil_data,
             crop=crop,
@@ -383,8 +481,6 @@ async def complete_analysis(request: SoilHealthRequest):
         )
         
         # Prepare response data with language support
-        language = request.language.lower() if request.language else "en"
-        
         response_data = {
             "cropRecommendation": {
                 "crop": crop_prediction['recommended_crop'],
@@ -402,6 +498,9 @@ async def complete_analysis(request: SoilHealthRequest):
             "summary": soil_analysis['summary'],
             "language": language  # Include language in response for reference
         }
+        
+        # Cache the result
+        set_cached_analysis(cache_key, response_data)
         
         return StandardResponse(
             success=True,
